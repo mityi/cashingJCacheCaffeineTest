@@ -1,0 +1,5 @@
+rootProject.name = 'jcache'
+include 'example-caffeine'
+include 'root'
+include 'spring'
+

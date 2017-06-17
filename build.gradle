@@ -1,0 +1,57 @@
+group 'ru.rda.tests'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:0.6.1.RELEASE"
+    }
+}
+
+subprojects {
+
+    repositories {
+        jcenter()
+    }
+    apply plugin: 'java'
+    apply plugin: "io.spring.dependency-management"
+
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.boot:spring-boot-starter-parent:1.4.2.RELEASE'
+        }
+        dependencies {
+            dependency 'org.springframework.boot:spring-boot-starter-cache:1.4.2.RELEASE'
+            dependency 'com.hazelcast:hazelcast:3.7.4'
+            dependency 'com.github.ben-manes.caffeine:caffeine:2.3.5'
+            dependency 'com.github.ben-manes.caffeine:jcache:2.3.5'
+            dependency 'javax.cache:cache-api:1.0.0'
+            dependency 'junit:junit:4.12'
+        }
+    }
+}
+
+project(':example-caffeine') {
+    dependencies {
+        compile 'com.github.ben-manes.caffeine:caffeine'
+    }
+}
+
+project(':root') {
+    dependencies {
+        compile 'com.github.ben-manes.caffeine:jcache'
+        compile 'javax.cache:cache-api'
+        testCompile 'junit:junit'
+    }
+}
+
+project(':spring') {
+    dependencies {
+        compile 'com.github.ben-manes.caffeine:jcache'
+        compile 'com.hazelcast:hazelcast'
+        compile 'org.springframework.boot:spring-boot-starter-cache'
+        compile 'javax.cache:cache-api'
+    }
+}
